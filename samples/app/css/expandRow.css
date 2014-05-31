@@ -1,0 +1,16 @@
+.group, .row, .sub {
+    -webkit-transition: height 0.5s ease-out;
+    transition: height 0.5s ease-out;
+}
+
+.groupExpand {
+    height: 40px;
+}
+
+.expandDefault {
+    height: 80px;
+}
+
+.expandSub {
+    height: 50px;
+}

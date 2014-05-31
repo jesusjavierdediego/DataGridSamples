@@ -1,0 +1,20 @@
+<div class="stats">
+    <div class="page-title">{{name}}</div>
+    <div>Scroll the list down. Click on the home button. Then click back on the link for scroll history. It should be scrolled to the same position.</div>
+    <span>SCROLL TO:</span>
+    <span data-ng-repeat="percent in percents"><a href="" data-ng-click="scrollToPercent(percent/100)">{{percent}}%</a> </span>
+</div>
+<div class="my-container">
+    <div class="listA">
+        <!--// this is the datagrid //-->
+        <div ux-datagrid="items" class="datagrid" data-addons="iScrollAddon, scrollHistory">
+            <script type="template/html" data-template-name="default" data-template-item="item">
+                <div class="row {{fake}}">
+                    <div class="text">{{item.id}} {{$id}} {{counter}}</div>
+                    <div random-icons="pencil droid trash"></div>
+                    <input type="text">
+                </div>
+            </script>
+        </div>
+    </div>
+</div>

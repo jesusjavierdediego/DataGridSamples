@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <title>Datagrid</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="YES">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="shortcut icon" href="images/favicon.ico">
+
+    <link type="text/css" rel="stylesheet" href="main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.js"></script>
+    <!--<script src="../../lib/angular.js"></script>-->
+    <script src="../../build/latest/angular-ux-datagrid.js"></script>
+    <script src="../../lib/iscroll.js"></script>
+    <script src="../../build/latest/addons/touch/ux-datagrid-iscroll.js"></script>
+    <!--<script src="../../build/latest/addons/touch/ios/ux-datagrid-iosScroll.js"></script>-->
+    <script>
+
+        var records = 50000;
+
+        function root($scope) {
+            $scope.counter = 0;
+            $scope.records = records;
+            $scope.percents = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+            setInterval(function () {
+                $scope.counter += 1;
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
+            }, 1000);
+
+            $scope.scrollToPercent = function (percent) {
+                var datagrid = document.getElementsByClassName('datagrid');
+                datagrid[0].scrollTop = angular.element(datagrid[0]).children()[0].offsetHeight * percent;
+            }
+
+            $scope.create = function () {
+
+            };
+        }
+
+        function simpleArray($scope) {
+            var i = 0;
+            $scope.items = [];
+            while (i < records) {
+                $scope.items.push({id: i});
+                i += 1;
+            }
+        }
+
+        angular.module('app', ['ux']);
+    </script>
+    <!--//
+        Note: {{fake}} below is to get angular to process the class attribute. This wipes out any css classes that were added by jquery.
+    //-->
+</head>
+<body data-ng-controller="root">
+<div class="stats">
+    This is a simple example of using the datagrid with {{records|number}} rows. No iScroll or any other scrolling plugin. Just native scrolling on a layered div.
+    <div>records {{records|number}}</div>
+    <span>SCROLL TO:</span>
+    <span data-ng-repeat="percent in percents"><a href="" data-ng-click="scrollToPercent(percent/100)">{{percent}}%</a> </span>
+</div>
+<!--// container to put a background loader behind the datagrid //-->
+<div class="my-container">
+    <div data-ng-controller="simpleArray" class="listA">
+        <!--// this is the datagrid //-->
+        <div data-ux-datagrid="items" class="datagrid" data-addons="iScrollAddon">
+            <script type="template/html" data-template-name="default" data-template-item="item">
+                <div class="row {{fake}}">
+                    <div class="text">{{item.id}} {{$id}} {{counter}}</div>
+                    <div random-icons="pencil droid trash"></div>
+                    <input type="text">
+                </div>
+            </script>
+        </div>
+    </div>
+</div>
+</body>
+</html>

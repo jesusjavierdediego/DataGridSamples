@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <title>Datagrid App</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="YES">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="shortcut icon" href="images/favicon.ico">
+
+    <link type="text/css" rel="stylesheet" href="css/loader.css">
+    <link type="text/css" rel="stylesheet" href="css/main.css">
+    <link type="text/css" rel="stylesheet" href="css/columns.css">
+    <link type="text/css" rel="stylesheet" href="css/expandRow.css">
+    <link type="text/css" rel="stylesheet" href="css/doubleScroll.css">
+    <!--// Angular Files //-->
+    <!--<script src="../../lib/angular.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular-route.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+    <!--// include the datagrid //-->
+    <script src="../../build/latest/angular-ux-datagrid.js"></script>
+    <script src="../../lib/iscroll.js"></script>
+
+    <!--// ADDONS //-->
+    <script src="../../build/latest/addons/desktop/ux-datagrid-disableHoverWhileScrolling.js"></script>
+    <script src="../../build/latest/addons/desktop/ux-datagrid-focusManager.js"></script>
+    <script src="../../build/latest/addons/touch/ux-datagrid-iscroll.js"></script>
+    <script src="../../build/latest/addons/ux-datagrid-infiniteScroll.js"></script>
+    <script src="../../build/latest/addons/ux-datagrid-gridLogger.js"></script>
+    <script src="../../build/latest/addons/ux-datagrid-scrollHistory.js"></script>
+    <script src="../../build/latest/addons/ux-datagrid-sortModel.js"></script>
+    <script src="../../build/latest/addons/ux-datagrid-statsModel.js"></script>
+    <script src="../../build/latest/addons/ux-datagrid-collapsibleGroups.js"></script>
+    <script src="../../build/latest/addons/ux-datagrid-expandRows.js"></script>
+    <script src="../../build/latest/addons/ux-datagrid-memoryOptimizer.js"></script>
+    <script src="../../build/latest/addons/ux-datagrid-scrollBar.js"></script>
+
+    <!--// other optional stuff -->
+    <script src="../../build/latest/other/ux-doubleScroll.js"></script>
+
+    <!--// Start the app //-->
+    <script src="app.js"></script>
+
+    <!--// a little code to make it easy to test from the console //-->
+    <script>
+        function grid() {
+            return angular.element(document.getElementsByClassName("datagrid")).scope().datagrid;
+        }
+    </script>
+</head>
+<body ng-controller="root">
+<!-- We'll also add some navigation: -->
+<div class="stats page-title">
+    <a href="#/home">Home</a>
+    <a href="#/simple">Simple</a>
+    <a href="#/grouped">Grouped</a>
+</div>
+<div ng-view class="content-area"></div>
+</body>
+</html>

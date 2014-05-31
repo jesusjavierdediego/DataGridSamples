@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <title>Datagrid</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="YES">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="shortcut icon" href="images/favicon.ico">
+
+    <link type="text/css" rel="stylesheet" href="main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.js"></script>
+    <!--<script src="../../lib/angular.js"></script>-->
+    <script src="../../build/latest/angular-ux-datagrid.js"></script>
+    <script src="../../build/latest/addons/ux-datagrid-windowScroll.js"></script>
+    <script>
+
+        var records = 50000;
+
+        function root($scope) {
+            var i = 0;
+            $scope.items = [];
+            while (i < records) {
+                $scope.items.push({id: i});
+                i += 1;
+            }
+        }
+
+        angular.module('app', ['ux']);
+    </script>
+    <!--//
+        Note: {{fake}} below is to get angular to process the class attribute. This wipes out any css classes that were added by jquery.
+    //-->
+</head>
+<body data-ng-controller="root" class="listA datagrid" data-ux-datagrid="items" data-addons="windowScroll">
+    <script type="template/html" data-template-name="default" data-template-item="item">
+        <div class="row {{fake}}">
+            <div class="text">{{item.id}} {{$id}} {{counter}}</div>
+            <div random-icons="pencil droid trash"></div>
+            <input type="text">
+        </div>
+    </script>
+</body>
+</html>

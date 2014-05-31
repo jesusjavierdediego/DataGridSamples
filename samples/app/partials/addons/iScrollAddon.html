@@ -1,0 +1,16 @@
+<div class="stats">
+    <div class="page-title">{{name}}</div>
+    <div>Android by default has smooth scrolling. IOS does not. It just stops when you stop scrolling. So this addon fixes that for IOS devices.</div>
+</div>
+<div class="my-container">
+    <div class="listA">
+        <!--// this is the datagrid //-->
+        <div data-ux-datagrid="items" class="datagrid" data-addons="iScrollAddon">
+            <script type="template/html" data-template-name="default" data-template-item="item">
+                <div class="row {{fake}}">
+                    <div class="text">{{item.id}} {{$id}} {{counter}}</div>
+                </div>
+            </script>
+        </div>
+    </div>
+</div>

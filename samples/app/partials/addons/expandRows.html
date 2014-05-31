@@ -1,0 +1,40 @@
+<div class="stats">
+    <div class="page-title">{{name}}</div>
+    Click on a row to toggle expand/collapse.</br>
+    <span>SCROLL TO:</span>
+    <span data-ng-repeat="percent in percents"><a href="" data-ng-click="scrollToPercent(percent/100)">{{percent}}%</a> </span>
+</div>
+<div class="my-container">
+    <div class="listA">
+        <!--// this is the datagrid //-->
+        <div ux-datagrid="items" class="datagrid" data-grouped="'children'" data-addons="iScrollAddon expandRows" data-options="{chunks:{size:10}, expandRows:[{template:'group', cls:'groupExpand'},{template:'default', cls:'expandDefault'},{template:'sub', cls:'expandSub'}]}">
+            <script type="template/html" data-template-name="group" data-template-item="item">
+                <div class="group {{fake}}" data-ng-click="datagrid.expandRows.toggle($index)">
+                    <div class="col col1">{{item.id}}</div>
+                    <div class="col col2">{{$id}}</div>
+                    <div class="col col4">{{counter}}</div>
+                    <div class="col col3">height 20px</div>
+                    <div class="col col5"></div>
+                </div>
+            </script>
+            <script type="template/html" data-template-name="default" data-template-item="item">
+                <div class="row {{fake}}" data-ng-click="datagrid.expandRows.toggle($index)">
+                    <div class="col col1">{{item.id}}</div>
+                    <div class="col col2">{{$id}}</div>
+                    <div class="col col4">{{counter}}</div>
+                    <div class="col col3">height 40px</div>
+                    <div class="col col5"><input type="text"></div>
+                </div>
+            </script>
+            <script type="template/html" data-template-name="sub" data-template-item="item">
+                <div class="sub {{fake}}" data-ng-click="datagrid.expandRows.toggle($index)">
+                    <div class="col col1">{{item.id}}</div>
+                    <div class="col col2">{{$id}}</div>
+                    <div class="col col4">{{counter}}</div>
+                    <div class="col col3">height 30px</div>
+                    <div class="col col5"><input type="text"></div>
+                </div>
+            </script>
+        </div>
+    </div>
+</div>

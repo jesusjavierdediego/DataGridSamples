@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <title>Datagrid</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="YES">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="shortcut icon" href="images/favicon.ico">
+
+    <link type="text/css" rel="stylesheet" href="loader.css">
+    <link type="text/css" rel="stylesheet" href="main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
+    <!--<script src="../../lib/angular.js"></script>-->
+    <script src="../../lib/iscroll.js"></script>
+    <script src="../../build/latest/angular-ux-datagrid.js"></script>
+
+    <!--// optional addons //-->
+    <script src="../../build/latest/addons/ux-datagrid-statsModel.js"></script>
+    <script src="../../build/latest/addons/touch/ux-datagrid-iscroll.js"></script>
+    <script>
+
+        var records = 50000;
+
+        function root($scope) {
+            $scope.counter = 0;
+            $scope.records = records;
+            $scope.percents = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+            $scope.$on(ux.datagrid.events.RENDER_PROGRESS, function (event, percent) {
+                $scope.percent = percent;
+                $scope.$digest();
+            });
+            $scope.$on(ux.datagrid.events.STATS_UPDATE, function (event, stats) {
+                $scope.stats = stats;
+            });
+            setInterval(function () {
+                $scope.counter += 1;
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
+            }, 1000);
+
+            $scope.scrollToPercent = function (percent) {
+                var datagrid = document.getElementsByClassName('datagrid');
+                datagrid[0].scrollTop = angular.element(datagrid[0]).children()[0].offsetHeight * percent;
+            }
+        }
+
+        function complexArray($scope) {
+            var i = 0, len = records, group, rand;
+            $scope.items = [];
+            while (i < len) {
+                rand = Math.random();
+                rand = rand >= 0.8 ? rand : 0;
+                if (!group || Math.round(rand)) {
+                    $scope.items.push(group = {
+                        id: 'G' + ($scope.items.length + 1),
+                        name: 'Group ' + ($scope.items.length + 1),
+                        _template: 'group',
+                        children: []
+                    });
+                }
+                group.children.push({id: 'I' + group.children.length + 1, children: [], _template: Math.round(Math.random()) ? 'sub' : 'default'});
+                i += 1;
+            }
+        }
+
+        /**
+         * this is the progress bar showing how many of the rows are rendered.
+         */
+        angular.module('progress', ['ng']).directive('progressBar', function () {
+            return {
+                restrict: 'A',
+                scope: true,
+                template: '<div>{{percent}}%</div>',
+                link: function (scope, element, attr) {
+                    scope.percent = 0;
+                    var onProgress = function (event, percent) {
+                        scope.percent = Math.round(percent * 100);
+                        if (!scope.$$phase) {
+                            scope.$digest();
+                        }
+                        angular.element(element[0].childNodes[0]).css({width: (percent*100) + '%', overflow: 'visible'});
+                    };
+                    scope.$root.$on(ux.datagrid.events.RENDER_PROGRESS, onProgress);
+                }
+            }
+        });
+
+        angular.module('app', ['ux', 'progress']);
+    </script>
+    <!--//
+        Note: {{fake}} below is to get angular to process the class attribute. This wipes out any css classes that were added by jquery.
+    //-->
+</head>
+<body data-ng-controller="root">
+<div class="stats">
+    The purpose of this example is to test the performance of lots of rows in the datagrid. Notice that these are not all the same height. Each template row can have it's own height.
+    <div>records {{records|number}} counter:{{counter}}</div>
+    <div progress-bar class="progress-bar"></div>
+    <span>SCROLL TO:</span>
+    <span data-ng-repeat="percent in percents"><a href="" data-ng-click="scrollToPercent(percent/100)">{{percent}}%</a> </span>
+</div>
+<!--// container to put a background loader behind the datagrid //-->
+<div class="my-container">
+    <!--// This is the background loader //-->
+    <div class="loader">
+         <div></div>
+         <div></div>
+         <div></div>
+    </div>
+    <!--// this is the controller for the datagrid //-->
+    <div data-ng-controller="complexArray" class="listA">
+        <!--// this is the datagrid //-->
+        <div ux-datagrid="items" class="datagrid" data-grouped="'children'" data-addons="statsModel, iScrollAddon">
+            <script type="template/html" data-template-name="group" data-template-item="item">
+                <div class="group {{fake}}">
+                    <div class="text">{{item.id}} {{$id}} {{counter}} height: 20px</div>
+                </div>
+            </script>
+            <script type="template/html" data-template-name="default" data-template-item="item">
+                <div class="row {{fake}}">
+                    <div class="text">{{item.id}} {{$id}} {{counter}} height: 40px</div>
+                    <input type="text">
+                </div>
+            </script>
+            <script type="template/html" data-template-name="sub" data-template-item="item">
+                <div class="sub {{fake}}">
+                    <div class="text">{{item.id}} {{$id}} {{counter}} height: 30px</div>
+                    <input type="text">
+                </div>
+            </script>
+        </div>
+    </div>
+</div>
+</body>
+</html>
