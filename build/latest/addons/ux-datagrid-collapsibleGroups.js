@@ -68,7 +68,26 @@ angular.module("ux").factory("collapsibleGroups", function() {
             }
             return false;
         }
+		
+		result.collapseAll = function(len){
+			console.log("collapseAll in collapsibleGroups");
+			var i = 0;
+			
+			setRowStatesInGroup(0, states.COLLAPSE);
+			/*
+			while (i < len) {
+				setRowStatesInGroup(i, states.COLLAPSE);
+			}*/
+		};
+		
+		result.expandAll = function(){
+			console.log("expandAll");
+			setRowStatesInGroup(0, states.EXPAND);
+			
+		};
         result.collapse = function(rowIndexOrGroup) {
+			console.log("ROW: " + rowIndexOrGroup);
+			console.log("ROW: " + rowIndexOrGroup);
             var index = getIndex(rowIndexOrGroup);
             setRowStatesInGroup(index, states.COLLAPSE);
         };

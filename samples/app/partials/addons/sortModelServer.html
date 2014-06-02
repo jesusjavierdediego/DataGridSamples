@@ -1,15 +1,26 @@
 <div class="stats">
     <div class="page-title">{{name}}</div>
-    <span>SCROLL TO:</span>
-    <span data-ng-repeat="p in percents"><a href="" data-ng-click="scrollToPercent(p/100)">{{p}}%</a> </span>
+    <div progress-bar class="progress-bar"></div>
+<!--    <span>SCROLL TO:</span>
+    <span data-ng-repeat="p in percents"><a href="" data-ng-click="scrollToPercent(p/100)">{{p}}%</a> </span>-->
 </div>
 <div class="header">
     <div class="row">
-        <div class="col sortCol1" data-ng-click="datagrid.sortModel.toggleSort('id')"><div class="{{datagrid.sortModel.getSortStateOf('id')}}">ID</div></div>
-        <div class="col sortCol2" data-ng-click="datagrid.sortModel.toggleSort('name')"><div class="{{datagrid.sortModel.getSortStateOf('name')}}">Name</div></div>
-        <div class="col sortCol3" data-ng-click="datagrid.sortModel.toggleSort('description')"><div class="{{datagrid.sortModel.getSortStateOf('description')}}">Description</div></div>
-        <div class="col sortCol4" data-ng-click="datagrid.sortModel.toggleSort('type')"><div class="{{datagrid.sortModel.getSortStateOf('type')}}">Type</div></div>
-        <div class="col sortCol5" data-ng-click="datagrid.sortModel.toggleSort('weight')"><div class="{{datagrid.sortModel.getSortStateOf('weight')}}">oz</div></div>
+        <div class="col sortCol1" data-ng-click="datagrid.sortModel.toggleSort('id')">
+            <div class="{{datagrid.sortModel.getSortStateOf('id')}}">ID</div>
+        </div>
+        <div class="col sortCol2" data-ng-click="datagrid.sortModel.toggleSort('name')">
+            <div class="{{datagrid.sortModel.getSortStateOf('name')}}">Name</div>
+        </div>
+        <div class="col sortCol3" data-ng-click="datagrid.sortModel.toggleSort('description')">
+            <div class="{{datagrid.sortModel.getSortStateOf('description')}}">Description</div>
+        </div>
+        <div class="col sortCol4" data-ng-click="datagrid.sortModel.toggleSort('type')">
+            <div class="{{datagrid.sortModel.getSortStateOf('type')}}">Type</div>
+        </div>
+        <div class="col sortCol5" data-ng-click="datagrid.sortModel.toggleSort('weight')">
+            <div class="{{datagrid.sortModel.getSortStateOf('weight')}}">oz</div>
+        </div>
     </div>
 </div>
 <div class="my-container">

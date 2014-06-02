@@ -1,33 +1,35 @@
 <div class="stats">
-    <div class="page-title">{{name}}</div>
+<!--    <div class="page-title">{{name}}</div>-->
 <!--    <div>Infinite Scroll is used to add more data to the grid as it scrolls to the bottom. The infiniteScroll.limit is set to 500 so that it will not load more or show a spinner after 200.</div>-->
     <div progress-bar class="progress-bar"></div>
     <span>SCROLL TO:</span>
     <span data-ng-repeat="p in percents"><a href="" data-ng-click="scrollToPercent(p/100)">{{p}}%</a> </span>
 </div>
+<div class="header">
+    <div class="row">
+        <div class="col sortCol1" data-ng-click="datagrid.sortModel.toggleSort('name')">
+            <div class="{{datagrid.sortModel.getSortStateOf('name')}}">ID</div>
+        </div>
+        <div class="col sortCol2" data-ng-click="datagrid.sortModel.toggleSort('allowance')">
+            <div class="{{datagrid.sortModel.getSortStateOf('allowance')}}">Name</div>
+        </div>
+    </div>
+</div>
 <div class="my-container">
     <div class="listA">
-        <!--// this is the datagrid //-->
-<!--        <div data-ux-datagrid="items" class="datagrid" data-options="{infiniteScroll: {limit:200}}" data-addons="iScrollAddon, infiniteScroll, gridLogger">
-            
+        
+        <!--// The DATAGRID!! //-->
+        <div data-ux-datagrid="items" class="datagrid" data-options="{infiniteScroll: {limit:200}}" data-addons="iScrollAddon">
             <script type="template/html" data-template-name="default" data-template-item="item">
-                <div class="row">
-                    <div class="text">{{item.name}} {{item.allowance}}</div>
+                <div class="row {{fake}}">
+                    <div class="col sortCol1"><input type="checkbox" name="filter" value={{item.name}}> {{item.name}}</div>
+                    <div class="col sortCol2">{{item.allowance}}</div>
                 </div>
             </script>
             <script type="template/html" data-template-name="loadingRow" data-template-item="item">
                 <div class="row loadingRow"></div>
             </script>
-            
-        </div>-->
-        
-        <div data-ux-datagrid="items" class="datagrid" data-options="{infiniteScroll: {limit:200}}" data-addons="iScrollAddon">
-            <script type="template/html" data-template-name="default" data-template-item="item">
-                <div class="row {{fake}}">
-                    <div class="col name">{{item.name}}</div>
-                    <div class="col allowance">{{item.allowance}}</div>
-                </div>
-            </script>
         </div>
+        
     </div>
 </div>

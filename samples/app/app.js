@@ -39,8 +39,17 @@ function createSimpleFieldList(len, offset, fields) {
     return items;
 }
 
+
+function expandAll(){
+    
+}
+
 function createGroupedList(len) {
-    var i = 0, group, rand, items = [];
+    var i = 0;
+    var group
+    var rand;
+    var items = [];
+
     len = len || records;
     while (i < len) {
         rand = Math.random();
@@ -62,6 +71,7 @@ function createGroupedList(len) {
 function createGroupedSpreadsheetData(len) {
     var i = 0, group, rand, items = [];
     len = len || records;
+    
     while (i < len) {
         rand = Math.random();
         rand = rand >= 0.8 ? rand : 0;
@@ -161,10 +171,7 @@ app.config(function ($routeProvider) {
         })
         .when('/addons/collapsibleGroups', {
             templateUrl: "partials/addons/collapsibleGroups.html",
-            controller: function ($scope) {
-                $scope.name = "Addons >> Collapsible Groups";
-                $scope.items = createGroupedList();
-            }
+            controller: "collapsibleCrtl"
         })
         .when('/addons/expandRows', {
             templateUrl: "partials/addons/expandRows.html",
@@ -245,34 +252,10 @@ app.config(function ($routeProvider) {
         .when('/addons/infiniteScroll', {
             templateUrl: "partials/addons/infiniteScroll.html",
             controller: "infiniteScrollCrtl"
-//            controller: function ($scope, $timeout) {
-//                
-//                $scope.name = "Addons >> InfiniteScroll";
-//                $scope.items = createSimpleList(20);
-//                $scope.$on(ux.datagrid.events.ON_SCROLL_TO_BOTTOM, function () {
-//                    if ($scope.items.length < grid().options.infiniteScroll.limit) {
-//                        // we are doing a timeout here to simulate time that an ajax call may need to get the paginated data.
-//                        $timeout(function () {
-//                            $scope.items = $scope.items.concat(createSimpleList(20, $scope.items.length));
-//                        }, 1000, true);
-//                    }
-//                });
-//                
-//            }
         })
         .when('/addons/memoryOptimizer', {
             templateUrl: "partials/addons/memoryOptimizer.html",
             controller: "memOptimizerCrtl"
-//            controller: function SimpleCtrl($scope) {
-//                $scope.name = "Memory Optimizer";
-//                $scope.items = createSimpleList();
-//                $scope.clear = function () {
-//                    $scope.items = [];
-//                };
-//                $scope.reset = function () {
-//                    $scope.items = createSimpleList();
-//                };
-//            }
         })
         .otherwise({
             redirectTo: '/'
@@ -282,6 +265,9 @@ app.config(function ($routeProvider) {
 app.controller('root', function root($scope) {
     $scope.counter = 0;
     $scope.records = records;
+    $scope.alert = function(text) {
+            alert(text);
+    };
     $scope.percents = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 //    setInterval(function () {
 //        $scope.counter += 1;
@@ -299,6 +285,28 @@ app.controller('root', function root($scope) {
 
     };
 });
+
+app.controller('collapsibleCrtl', function($scope, $log){
+    $scope.name = "Collapsible Groups";
+    $scope.items = createGroupedList();
+    $log.debug("Number of items: " + $scope.items.length);
+    
+    $scope.expandAll = function () {
+        var datagrid = document.getElementsByClassName('datagrid');
+        angular.element(datagrid).scope().datagrid.collapsibleGroups.expandAll($scope.items.length);
+        //
+    };
+    
+    $scope.collapseAll = function () {
+        var datagrid = document.getElementsByClassName('datagrid');
+        angular.element(datagrid).scope().datagrid.collapsibleGroups.collapseAll($scope.items.length);
+        //var i = 0;
+//        while (i < $scope.items.length) {
+//            angular.element(datagrid).scope().datagrid.collapsibleGroups.collapse(i);
+//        }
+    };
+    
+})
 
 app.controller('infiniteScrollCrtl', function($scope, $log, $http, $q, $timeout){
 
